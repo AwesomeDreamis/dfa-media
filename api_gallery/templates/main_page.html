@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {% if not request.user.is_authenticated %}
+        {% if form.errors %}
+            <p>username or password not correct</p>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <br>
+            <a href="{% url 'register' %}">Register</a>
+
+            <button type="submit">Login</button>
+        </form>
+
+    {% else %}
+        Добро пожаловать, {{ request.user }} <a href="{% url 'logout'%}">Logout</a>
+        <br>
+        <br>
+        <a href="{% url 'users_api_list'%}">API пользователей</a>
+        <br>
+        <a href="{% url 'images_api_list'%}">API изображений</a>
+        <br>
+        <br>
+        <a href="{% url 'delete_all_images'%}">Удалить все изображения</a>
+        <br>
+        <a href="{% url 'get_current_user'%}">Перейти к текущему пользователю</a>
+    {% endif %}
+</body>
+</html>
